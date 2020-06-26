@@ -7,13 +7,6 @@ $.ajax({
     console.log(response);
 })
 
-$.ajax({
-    url: "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=20&q=javascript&type=video&key=AIzaSyBJ0EE3BhTz86K0yopCqgn45JS7EBuybwA",
-    method: "GET"
-}).then(function (response) {
-    console.log(response);
-})
-
 const searchTerm = "";
 const apiKey = "AIzaSyBJ0EE3BhTz86K0yopCqgn45JS7EBuybwA";
 const queryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&type=video&key=" + apiKey + "&q=" + searchTerm;
