@@ -1,5 +1,3 @@
-const firstSeacrhbox = $("#first-box");
-
 $.ajax({
     url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=20&what=javascript%20developer&content-type=application/json",
     method: "GET"
