@@ -34,6 +34,13 @@ function jobSearch() {
     if (jobSearchBox.val() !== "") {
         jobSearchKeyword = jobSearchBox.val();
         localStorage.setItem("jobName", jobSearchKeyword);
+
+    }
+    if (jobSearchBox.val() !== "" && locationSearchBox.val() === "") {
+        jobSearchKeyword = jobSearchBox.val();
+        localStorage.setItem("jobName", jobSearchKeyword);
+        locationSearchKeyword = "";
+        localStorage.setItem("locationName", locationSearchKeyword);
     }
 
     jobResultsDiv.html("")
