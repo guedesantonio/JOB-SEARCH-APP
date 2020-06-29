@@ -13,18 +13,29 @@
 //5. Choosing the city (This version of Adzuna API only works for the UK so the city must be anywere in the UK)
 //6. Sorting the results by slaray 
 
-$.ajax({
-    url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=20&what=javascript%20developer&content-type=application/json",
-    method: "GET"
-}).then(function (response) {
-    console.log(response);
-    //job title header prototype
-    $(".first").append($("<h4>" + response.results[0].title + "</h4>"));
-    //description div prototype
-    $(".first").append($("<div>" + response.results[0].description + "</div>"));
-    //ad url anchor prototype
-    $(".first").append($("<a href=" + response.results[0].redirect_url + ">Apply Here</a>"));
-})
+const jobSearchBox = $(".searchBox");
+let jobSearchKeyword;
+
+jobSearchBox.keypress(function (event) {
+    if (event.keyCode == 13 || event.which == 13) {
+        jobSearchKeyword = jobSearchBox.text();
+        $.ajax({
+            url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=20&what=" + jobSearchKeyword + "&content-type=application/json",
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+            //job title header prototype
+            $("#positionName").html(response.results[0].title);
+            //description div prototype
+            // $("#positionLink").html(response.results[0].redirect_url);
+            //ad url anchor prototype
+            $("a").append($("<a href=" + response.results[0].redirect_url + ">Apply Here</a>"));
+        })
+    }
+});
+
+
+
 
 // =============================================================================================================
 // Anna's Code
