@@ -1,7 +1,6 @@
-/*
- * -- BASE STYLES --
- * Most of these are inherited from Base, but I want to change a few.
- */
+
+ /* * -- BASE STYLES -- */
+
  body {
     color: #526066;
     position: relative;
@@ -106,121 +105,19 @@ p {
 
 
 /*
- * -- PRICING TABLE WRAPPER --
- * This element wraps up all the pricing table elements
+ resultsDiv Styling
  */
- .pricing-tables,
- .information {
-    max-width: 980px;
-    margin: 0 auto;
- }
-.pricing-tables {
+
+.resultsDiv {
     margin-bottom: 3.125em;
     text-align: center;
+    max-width: 980px;
+    margin: 0 auto;
 }
 
-/*
- * -- PRICING TABLE  --
- * Every pricing table has the .pricing-table class
- */
-.pricing-table {
-    border: 1px solid #ddd;
-    margin: 0 0.5em 2em;
-    padding: 0 0 3em;
-}
+/* /* 
+ * -- FOOTER  -- */
 
-/*
- * -- PRICING TABLE HEADER COLORS --
- * Choose a different color based on the type of pricing table.
- */
-.pricing-table-free .pricing-table-header {
-    background: #519251;
-}
-
-.pricing-table-biz .pricing-table-header {
-    background: #2c4985;
-}
-
-/*
- * -- PRICING TABLE HEADER --
- * By default, a header is black/white, and has some styles for its <h2> name.
- */
-.pricing-table-header {
-    background: #111;
-    color: #fff;
-}
-    .pricing-table-header h2 {
-        margin: 0;
-        padding-top: 2em;
-        font-size: 1em;
-        font-weight: normal;
-
-    }
-
-
-/*
- * -- PRICING TABLE PRICE --
- * Styles for the price and the corresponding <span>per month</span>
- */
-.pricing-table-price {
-    font-size: 6em;
-    margin: 0.2em 0 0;
-    font-weight: 100;
-}
-    .pricing-table-price span {
-        display: block;
-        text-transform: uppercase;
-        font-size: 0.2em;
-        padding-bottom: 2em;
-        font-weight: 400;
-        color: rgba(255, 255, 255, 0.5);
-        *color: #fff;
-    }
-
-
-
-/*
- * -- PRICING TABLE LIST --
- * Each pricing table has a <ul> which is denoted by the .pricing-table-list class
- */
-.pricing-table-list {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    text-align: center;
-}
-
-
-/*
- * -- PRICING TABLE LIST ELEMENTS --
- * Styles for the individual list elements within each pricing table
- */
-.pricing-table-list li {
-    padding: 0.8em 0;
-    background: #f7f7f7;
-    border-bottom: 1px solid #e7e7e7;
-}
-
-
-/*
- * -- PRICING TABLE BUTTON --
- * Styles for the "Choose" button at the bottom of a pricing table.
- * This inherits from Pure Button.
- */
-.button-choose {
-    border: 1px solid #ccc;
-    background: #fff;
-    color: #333;
-    border-radius: 2em;
-    font-weight: bold;
-    position: relative;
-    bottom: -1.5em;
-}
-
-.information-head {
-    color: black;
-    font-weight: 500;
-}
 
 .footer {
     background: #111;
@@ -320,9 +217,7 @@ p {
     .banner-head {
         font-size: 4em;
     }
-    .pricing-table {
-        margin-bottom: 0;
-    }
+
 
 }
 
