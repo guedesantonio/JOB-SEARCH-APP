@@ -14,9 +14,10 @@
 //6. Sorting the results by slaray 
 
 const jobSearchBox = $("#jobInput");
-const locationSearchBox = $("#locationInput");
-const jobResultsDiv = $("#jobResult")
 const jobSearchButton = $("#jobSearchButton");
+const locationSearchBox = $("#locationInput");
+const locationSearchButton = $("#locationSearchButton");
+const jobResultsDiv = $("#jobResult")
 let jobSearchKeyword = "";
 let locationSearchKeyword = "";
 
@@ -25,7 +26,7 @@ function jobSearch() {
         jobSearchKeyword = jobSearchBox.val();
         jobResultsDiv.html("")
         $.ajax({
-            url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=10&what=" + jobSearchKeyword + "&content-type=application/json",
+            url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=10&what=" + jobSearchKeyword + "&where=" + locationSearchKeyword + "&content-type=application/json",
             method: "GET"
         }).then(function (response) {
             console.log(response);
@@ -38,6 +39,13 @@ function jobSearch() {
     }
 }
 
+function locationSearch() {
+    if (locationSearchBox.val() !== "") {
+        locationSearchKeyword = locationSearchBox.val();
+        jobSearch();
+    }
+}
+
 jobSearchButton.on("click", function () {
     jobSearch();
 });
@@ -47,6 +55,18 @@ jobSearchBox.keypress(function (event) {
         jobSearch();
     }
 });
+
+locationSearchButton.on("click", function () {
+    locationSearch();
+});
+
+locationSearchBox.keypress(function (event) {
+    if (event.keyCode == 13 || event.which == 13) {
+        locationSearch();
+    }
+});
+
+
 
 
 
