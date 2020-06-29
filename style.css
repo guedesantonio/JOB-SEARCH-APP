@@ -4,28 +4,61 @@
  */
  body {
     color: #526066;
+    position: relative;
+    padding-bottom: 58px;
+    min-height: 100vh;
+}
+a {
+    display: flex;
+    justify-content: flex-start;
+
 }
 
 h1 {
+    
     color: black;
 }
 
-h2, h3 {
+h2{
     letter-spacing: 0.25em;
     text-transform: uppercase;
     font-weight: 600;
+    position: absolute;
+    color: black;
+    font-weight: 500;
+    text-shadow: 0 1px 1px white;
+    margin-top: 60px;
+    
+}
+
+h3 {
+    display: flex;
+  justify-content: flex-start;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+h4 {
+    display: flex;
+  justify-content: flex-start;
 }
 
 p {
     line-height: 1.6em;
 }
 
+.brlarge { 
+   
+    margin-bottom: 80px; 
+} 
 
 /*
  * -- Layout Styles --
  */
 .l-content {
     margin: 0 auto;
+   
 }
 
 .l-box {
@@ -38,10 +71,6 @@ p {
  */
 .pure-menu {
     box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
-}
-
-.pure-menu-link {
-    padding: .5em .7em;
 }
 
 
@@ -71,7 +100,7 @@ p {
         font-size: 2em;
         color: black;
         font-weight: 500;
-        text-shadow: 0 1px 1px black;
+        text-shadow: 0 2px 2px white;
     }
 
 
@@ -197,11 +226,88 @@ p {
     background: #111;
     color: #888;
     text-align: center;
+    padding: 20px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
     .footer a {
         color: #ddd;
     }
+/* animated search bar */
+.searchMain {
+    position: relative;
+}
 
+.searchBox {
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    transform:  translate(-50%,50%);
+    background: #2f3640;
+    height: 40px;
+    border-radius: 40px;
+    padding: 10px;
+
+}
+
+.box2 {
+    position: absolute;
+    top: 30%;
+    left: 70%;
+    transform:  translate(-50%,50%);
+    background: #2f3640;
+    height: 40px;
+    border-radius: 40px;
+    padding: 10px;
+
+}
+
+.searchBox:hover > .searchInput {
+    width: 240px;
+    padding: 0 6px;
+}
+
+.searchBox:hover > .searchButton {
+  background: white;
+  color : #2f3640;
+}
+
+.searchButton {
+    color: white;
+    float: right;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #2f3640;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.4s;
+}
+
+.searchInput {
+    border:none;
+    background: none;
+    outline:none;
+    float:left;
+    padding: 0;
+    color: white;
+    font-size: 16px;
+    transition: 0.4s;
+    line-height: 40px;
+    width: 0px;
+
+}
+
+
+
+@media screen and (max-width: 620px) {
+.searchBox:hover > .searchInput {
+    width: 150px;
+    padding: 0 6px;
+}
+}
 
 
 /*
@@ -229,6 +335,6 @@ p {
         height: 400px;
     }
     .banner-head {
-        font-size: 3em;
+        font-size: 4em;
     }
 }
