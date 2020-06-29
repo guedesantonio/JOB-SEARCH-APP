@@ -15,23 +15,32 @@
 
 const jobSearchBox = $("#jobInput");
 const jobResultsDiv = $("#jobResult")
+const jobSearchButton = $("#jobSearchButton");
 let jobSearchKeyword;
+
+function jobSearch() {
+    jobSearchKeyword = jobSearchBox.val();
+    jobResultsDiv.html("")
+    $.ajax({
+        url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=10&what=" + jobSearchKeyword + "&content-type=application/json",
+        method: "GET"
+    }).then(function (response) {
+        console.log(response);
+        for (let i = 0; i < response.results.length; i++) {
+            jobResultsDiv.append($('<h3 id="positionName"><i class="material-icons">face</i>' + response.results[i].title + '</h3>'));
+            jobResultsDiv.append($('<a id="positionLink" href="' + response.results[i].redirect_url + '"><i class="material-icons">link</i> Apply Here </a><h4><i class="material-icons">details</i> Details </h4>'));
+            jobResultsDiv.append($('<p id=positionDesc>' + response.results[i].description.replace(/['"]+/g, '') + '</p>'));
+        }
+    })
+}
+
+jobSearchButton.on("click", function () {
+    jobSearch();
+});
 
 jobSearchBox.keypress(function (event) {
     if (event.keyCode == 13 || event.which == 13) {
-        jobSearchKeyword = jobSearchBox.val();
-        jobResultsDiv.html("")
-        $.ajax({
-            url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=10&what=" + jobSearchKeyword + "&content-type=application/json",
-            method: "GET"
-        }).then(function (response) {
-            console.log(response);
-            for (let i = 0; i < response.results.length; i++) {
-                jobResultsDiv.append($('<h3 id="positionName"><i class="material-icons">face</i>' + response.results[i].title + '</h3>'));
-                jobResultsDiv.append($('<a id="positionLink" href="' + response.results[i].redirect_url + '"><i class="material-icons">link</i> Apply Here </a><h4><i class="material-icons">details</i> Details </h4>'));
-                jobResultsDiv.append($('<p id=positionDesc>' + response.results[i].description.replace(/['"]+/g, '') + '</p>'));
-            }
-        })
+        jobSearch();
     }
 });
 
