@@ -14,25 +14,23 @@
 //6. Sorting the results by slaray 
 
 const jobSearchBox = $("#jobInput");
+const jobResultsDiv = $("#jobResult")
 let jobSearchKeyword;
 
 jobSearchBox.keypress(function (event) {
     if (event.keyCode == 13 || event.which == 13) {
         jobSearchKeyword = jobSearchBox.val();
+        jobResultsDiv.html("")
         $.ajax({
-            url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=20&what=" + jobSearchKeyword + "&content-type=application/json",
+            url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=10&what=" + jobSearchKeyword + "&content-type=application/json",
             method: "GET"
         }).then(function (response) {
             console.log(response);
-            //job title header prototype
-            $("#positionName").html('<i class="material-icons">face</i>' + response.results[0].title);
-            //description div prototype
-            $("#positionDesc").text("");
-            $("#positionDesc").append(response.results[0].description.replace(/['"]+/g, ''));
-            //ad url anchor prototype
-            $("#positionLink").html("<i class='material-icons'>link</i> Apply Here");
-            $("#positionLink").attr("href", response.results[0].redirect_url);
-            $("#positionLink").attr("target", "_blank");
+            for (let i = 0; i < response.results.length; i++) {
+                jobResultsDiv.append($('<h3 id="positionName"><i class="material-icons">face</i>' + response.results[i].title + '</h3>'));
+                jobResultsDiv.append($('<a id="positionLink" href="' + response.results[i].redirect_url + '"><i class="material-icons">link</i> Apply Here </a><h4><i class="material-icons">details</i> Details </h4>'));
+                jobResultsDiv.append($('<p id=positionDesc>' + response.results[i].description.replace(/['"]+/g, '') + '</p>'));
+            }
         })
     }
 });
