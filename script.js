@@ -40,13 +40,23 @@ jobSearchBox.keypress(function (event) {
 // =============================================================================================================
 // Anna's Code
 // =============================================================================================================
-const searchTerm = "";
-const apiKey = "AIzaSyBJ0EE3BhTz86K0yopCqgn45JS7EBuybwA";
-const queryURL = "https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=3&type=video&key=" + apiKey + "&q=" + searchTerm;
+const searchTerm = $("#jobSearch").val();
+const queryURL = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm;
 
 $.ajax({
     url: queryURL,
     method: "GET"
 }).then(function (response) {
-    console.log(response)
+    console.log(response);
+    let bookArray = response.items;
+    const displayBooks = $("#booksResult");
+    const bookThumbnail = $("<img>").attr("src", response.items[i].volumeInfo.imageLinks.thumbnail);
+    const rating = $("<p>").addClass("rating");
+    rating.text(response.items[i].volumeInfo.averageRating);
+    const bookTitle = $("<p>").addClass("bookTitle");
+    bookTitle.text(`${response.items[i].volumeInfo.title}: ${response.items[i].volumeInfo.subtitle}`);
+    
+    displayBooks.append(bookThumbnail);
+    displayBooks.append(rating);
+    displayBooks.append(bookTitle);
 });
