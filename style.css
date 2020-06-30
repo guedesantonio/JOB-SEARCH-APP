@@ -1,7 +1,7 @@
 
  /* * -- BASE STYLES -- */
 
- body {
+body {
     color: #526066;
     position: relative;
     padding-bottom: 58px;
@@ -10,15 +10,13 @@
 a {
     display: flex;
     justify-content: flex-start;
-
 }
 
 h1 {
-    
     color: black;
 }
 
-h2{
+h2 {
     letter-spacing: 0.25em;
     text-transform: uppercase;
     font-weight: 600;
@@ -27,12 +25,11 @@ h2{
     font-weight: 500;
     text-shadow: 0 1px 1px white;
     margin-top: 60px;
-    
 }
 
 h3 {
     display: flex;
-  justify-content: flex-start;
+    justify-content: flex-start;
     letter-spacing: 0.25em;
     text-transform: uppercase;
     font-weight: 600;
@@ -40,7 +37,7 @@ h3 {
 
 h4 {
     display: flex;
-  justify-content: flex-start;
+    justify-content: flex-start;
 }
 
 p {
@@ -64,7 +61,6 @@ p {
     justify-content: center;
     align-items: center;
     transition: 0.4s;
-
 }
 
 /*
@@ -72,7 +68,6 @@ p {
  */
 .l-content {
     margin: 0 auto;
-   
 }
 
 .l-box {
@@ -80,9 +75,7 @@ p {
 }
 
 #jobResult {
-
     padding: 80px;
-   
 }
 /*
  * -- MENU STYLES --
@@ -243,8 +236,6 @@ p {
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     
-    
-    
     scroll-behavior: smooth;
     -webkit-overflow-scrolling: touch;
     
@@ -280,7 +271,18 @@ p {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 100px;
+    font-size: 15px;
+  }
+
+  .bookDetails {
+    padding: 100px;
+    text-align: left;
+  }
+  .bookDetails img {
+    padding-left: 30px;
+    padding-top: 30px;
+    width: 20%;
+    height: 80%;
   }
 
   .author-info {
