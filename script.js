@@ -127,23 +127,49 @@ appStart();
 // =============================================================================================================
 // Anna's Code
 // =============================================================================================================
-const searchTerm = $("#jobSearch").val();
-const queryURL = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm;
+// const searchTerm = $("#jobSearch").val();
+// const queryURL = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm;
 
 $.ajax({
-    url: queryURL,
+    url: "https://www.googleapis.com/books/v1/volumes?q=javascript",
     method: "GET"
 }).then(function (response) {
     console.log(response);
     let bookArray = response.items;
-    const displayBooks = $("#booksResult");
-    const bookThumbnail = $("<img>").attr("src", response.items[i].volumeInfo.imageLinks.thumbnail);
-    const rating = $("<p>").addClass("rating");
-    rating.text(response.items[i].volumeInfo.averageRating);
-    const bookTitle = $("<p>").addClass("bookTitle");
-    bookTitle.text(`${response.items[i].volumeInfo.title}: ${response.items[i].volumeInfo.subtitle}`);
+    console.log(bookArray)
+    const displayBookSlide = $(".slides");
 
-    displayBooks.append(bookThumbnail);
-    displayBooks.append(rating);
-    displayBooks.append(bookTitle);
+    for (let i = 0; i < 5; i++) {
+        const newDiv = $("<div>").addClass(`slide-${i+1}`);
+        const bookDiv = $("<div>").addClass("pure-g bookDetails");
+        const imageDiv = $("<div>").addClass("pure-u-5-24 pure-u-sm-1");
+        const bookThumbnail = $("<img>").attr({src:bookArray[i].volumeInfo.imageLinks.thumbnail, alt:"book cover"});
+        imageDiv.append(bookThumbnail);
+        
+        const bookDescriptionDiv = $("<div>").addClass("pure-u-19-24 pure-u-sm-1");
+
+        const bookTitle = $("<h3>").addClass("bookTitle");
+        bookTitle.text(`${bookArray[i].volumeInfo.title}: ${bookArray[i].volumeInfo.subtitle}`);
+        const rating = $("<h4>").addClass("bookRating");
+        rating.html(`Rating: ${bookArray[i].volumeInfo.averageRating}`);
+
+        const bookDescription = $("<p>").addClass("bookDescription");
+        const description = bookArray[i].volumeInfo.description;
+        bookDescription.text(description);
+
+        const bookPurchase = $("<a>").addClass("bookBuy");
+        bookPurchase.text("Click here for more information");
+        bookPurchase.attr("href", bookArray[i].volumeInfo.infoLink)
+
+        bookDescriptionDiv.append(bookTitle);
+        bookDescriptionDiv.append(rating);
+        bookDescriptionDiv.append(bookDescription);
+        bookDescriptionDiv.append(bookPurchase);
+
+        bookDiv.append(imageDiv);
+        bookDiv.append(bookDescriptionDiv);
+        newDiv.append(bookDiv);
+
+        displayBookSlide.append(newDiv);
+    }
 });
