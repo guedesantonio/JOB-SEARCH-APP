@@ -2,17 +2,6 @@
 // Mo's Code
 // =========================================================================================================
 
-//possible parameters for a basic search
-//1. Number of retrieved results
-//2. keyword
-//possible parameters for a complex search
-//1. Minimum Salary
-//2. Searching for only full time jobs
-//3. Searching for only permanent positions
-//4. Excluding keywords that maycontain similar words like excluding ads for Java developers when you search for a Javascript job
-//5. Choosing the city (This version of Adzuna API only works for the UK so the city must be anywere in the UK)
-//6. Sorting the results by slaray 
-
 const jobSearchBox = $("#jobInput");
 const jobSearchButton = $("#jobSearchButton");
 const locationSearchBox = $("#locationInput");
@@ -56,7 +45,6 @@ function jobSearch() {
         }
     })
 }
-
 
 function locationSearch() {
     locationSearchKeyword = locationSearchBox.val();
