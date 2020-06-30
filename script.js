@@ -29,12 +29,7 @@ let sortBySalaryValue = "";
 let searchResults = [];
 
 function jobSearch() {
-    // if (localStorage.length !== 0) {
-    //     jobSearchKeyword = localStorage.getItem("jobName");
-    //     locationSearchKeyword = localStorage.getItem("locationName");
-    //     console.log(jobSearchKeyword);
-    // } else
-    if (jobSearchBox.val() === "") {
+    if (jobSearchBox.val() === "" && jobSearchKeyword === "") {
         return;
     }
     if (jobSearchBox.val() !== "") {
@@ -46,13 +41,7 @@ function jobSearch() {
             salarySort: sortBySalaryValue,
             location: locationSearchKeyword
         });
-
-    }
-    if (jobSearchBox.val() !== "" && locationSearchBox.val() === "") {
-        jobSearchKeyword = jobSearchBox.val();
-        localStorage.setItem("jobName", jobSearchKeyword);
-        locationSearchKeyword = "";
-        localStorage.setItem("locationName", locationSearchKeyword);
+        localStorage.setItem("searchParameters", JSON.stringify(searchResults));
     }
 
     jobResultsDiv.html("")
@@ -71,14 +60,27 @@ function jobSearch() {
 
 
 function locationSearch() {
-    if (locationSearchBox.val() !== "") {
-        locationSearchKeyword = locationSearchBox.val();
-        jobSearch();
-    }
+    locationSearchKeyword = locationSearchBox.val();
+    jobSearch();
 }
 
 function appStart() {
     if (localStorage.length !== 0) {
+        searchResults = JSON.parse(localStorage.getItem("searchParameters"));
+        jobSearchKeyword = searchResults[searchResults.length - 1].keyword;
+        permanentPositionValue = searchResults[searchResults.length - 1].permanent;
+        if (permanentPositionValue !== "") {
+            document.getElementById("checkPerm").checked = true;
+        }
+        fullTimePositionValue = searchResults[searchResults.length - 1].fulltime;
+        if (fullTimePositionValue !== "") {
+            document.getElementById("checkFullTime").checked = true;
+        }
+        sortBySalaryValue = searchResults[searchResults.length - 1].salarySort;
+        if (sortBySalaryValue !== "") {
+            document.getElementById("checkSalaryOrder").checked = true;
+        }
+        locationSearchKeyword = searchResults[searchResults.length - 1].location;
         jobSearch();
     }
 }
