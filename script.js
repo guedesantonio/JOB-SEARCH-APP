@@ -51,9 +51,8 @@ function jobSearch() {
     }).then(function (response) {
         console.log(response);
         for (let i = 0; i < response.results.length; i++) {
-            jobResultsDiv.append($('<h3 id="positionName"><i class="material-icons">face</i>' + response.results[i].title.replace(/<strong>/g, '') + '</h3>'));
-            jobResultsDiv.append($('<a id="positionLink" href="' + response.results[i].redirect_url + '" target="_blank"><i class="material-icons">link</i> Apply Here </a><h4><i class="material-icons">details</i> Details </h4>'));
-            jobResultsDiv.append($('<p id=positionDesc>' + response.results[i].description.replace(/<strong>/g, '') + '</p > '));
+            jobResultsDiv.append($('<a id="positionLink" href="' + response.results[i].redirect_url + '" target="_blank"><h3 id="positionName style="text-align:left;">' + response.results[i].title.replace(/<strong>/g, '') + '</h3></a>'));
+            jobResultsDiv.append($('<p id=positionDesc style="text-align:justify;">' + response.results[i].description.replace(/<strong>/g, '') + '</p > '));
         }
     })
 }
