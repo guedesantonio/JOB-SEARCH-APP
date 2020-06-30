@@ -285,6 +285,36 @@ p {
     height: 80%;
   }
 
+  /* Start copy code from http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/ */
+  /* styles for '...' */ 
+.bookDescription {
+  overflow: hidden;
+  position: relative; 
+  line-height: 1.2em;
+  max-height: 3.6em; 
+  text-align: justify;  
+  margin-right: -1em;
+  padding-right: 1em;
+}
+/* create the ... */
+.bookDescription:before {
+  content: '...';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+/* hide ... if we have text, which is less than or equal to max lines */
+.bookDescription:after {
+  content: '';
+  position: absolute;
+  right: 0;
+  width: 1em;
+  height: 1em;
+  margin-top: 0.2em;
+  background:#eeeeee;
+}
+/* End copy code from http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/ */
+
   .author-info {
     background: rgba(0, 0, 0, 0.75);
     color: white;
