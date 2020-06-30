@@ -209,6 +209,20 @@ p {
     width: 0px;
 
 }
+/* CHECKBOXES******* */
+
+.checkboxDiv {
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
+}
+
+
+.checkbox {
+    padding:30px;
+    white-space: nowrap;
+}
 
 /* ANIMATED CAROUSEL ********************************/
 #booksresult {
@@ -350,6 +364,10 @@ p {
     width: 150px;
     padding: 0 6px;
 }
+
+.checkboxDiv {
+    flex-direction: column;
+}
 }
 
 
@@ -368,6 +386,7 @@ p {
         padding: 0 6px;
     }
 
+  
 }
 
 /*
