@@ -101,24 +101,30 @@ locationSearchBox.keypress(function (event) {
 fullTimeJobsCheckBox.on("click", function () {
     if (document.getElementById("checkFullTime").checked) {
         fullTimePositionValue = "1";
+        jobSearch();
     } else {
         fullTimePositionValue = "";
+        jobSearch();
     }
 });
 
 permanentPositionCheckBox.on("click", function () {
     if (document.getElementById("checkPerm").checked) {
         permanentPositionValue = "1";
+        jobSearch();
     } else {
         permanentPositionValue = "";
+        jobSearch();
     }
 })
 
 salarySortCheckBox.on("click", function () {
     if (document.getElementById("checkSalaryOrder").checked) {
         sortBySalaryValue = "&sort_by=salary";
+        jobSearch();
     } else {
         sortBySalaryValue = "";
+        jobSearch();
     }
 })
 
@@ -143,9 +149,12 @@ $.ajax({
         const newDiv = $("<div>").addClass(`slide-${i+1}`);
         const bookDiv = $("<div>").addClass("pure-g bookDetails");
         const imageDiv = $("<div>").addClass("pure-u-5-24 pure-u-sm-1");
-        const bookThumbnail = $("<img>").attr({src:bookArray[i].volumeInfo.imageLinks.thumbnail, alt:"book cover"});
+        const bookThumbnail = $("<img>").attr({
+            src: bookArray[i].volumeInfo.imageLinks.thumbnail,
+            alt: "book cover"
+        });
         imageDiv.append(bookThumbnail);
-        
+
         const bookDescriptionDiv = $("<div>").addClass("pure-u-19-24 pure-u-sm-1");
 
         const bookTitle = $("<h3>").addClass("bookTitle");
