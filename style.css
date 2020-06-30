@@ -275,7 +275,7 @@ p {
   }
 
   .bookDetails {
-    padding: 100px;
+    padding: 0 100px 0 100px;
     text-align: left;
   }
   .bookDetails img {
