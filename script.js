@@ -18,8 +18,14 @@ const jobSearchButton = $("#jobSearchButton");
 const locationSearchBox = $("#locationInput");
 const locationSearchButton = $("#locationSearchButton");
 const jobResultsDiv = $("#jobResult")
+const permanentPositionCheckBox = $("#checkPerm");
+const fullTimeJobsCheckBox = $("#checkFullTime");
+const salarySortCheckBox = $("#checkSalaryOrder");
 let jobSearchKeyword = "";
 let locationSearchKeyword = "";
+let permanentPositionValue = "";
+let fullTimePositionValue = "";
+let sortBySalaryValue = "";
 let searchResults = [];
 
 function jobSearch() {
@@ -45,7 +51,7 @@ function jobSearch() {
 
     jobResultsDiv.html("")
     $.ajax({
-        url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=10&what=" + jobSearchKeyword + "&where=" + locationSearchKeyword + "&content-type=application/json",
+        url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=10&what=" + jobSearchKeyword + "&where=" + locationSearchKeyword + "&permanent=" + permanentPositionValue + "&full_time=" + fullTimePositionValue + sortBySalaryValue + "&content-type=application/json",
         method: "GET"
     }).then(function (response) {
         console.log(response);
@@ -91,6 +97,30 @@ locationSearchBox.keypress(function (event) {
         locationSearch();
     }
 });
+
+fullTimeJobsCheckBox.on("click", function () {
+    if (document.getElementById("checkFullTime").checked) {
+        fullTimePositionValue = "1";
+    } else {
+        fullTimePositionValue = "";
+    }
+});
+
+permanentPositionCheckBox.on("click", function () {
+    if (document.getElementById("checkPerm").checked) {
+        permanentPositionValue = "1";
+    } else {
+        permanentPositionValue = "";
+    }
+})
+
+salarySortCheckBox.on("click", function () {
+    if (document.getElementById("checkSalaryOrder").checked) {
+        sortBySalaryValue = "&sort_by=salary";
+    } else {
+        sortBySalaryValue = "";
+    }
+})
 
 appStart();
 
