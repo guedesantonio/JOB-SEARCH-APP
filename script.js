@@ -29,17 +29,23 @@ let sortBySalaryValue = "";
 let searchResults = [];
 
 function jobSearch() {
-    if (localStorage.length !== 0) {
-        jobSearchKeyword = localStorage.getItem("jobName");
-        locationSearchKeyword = localStorage.getItem("locationName");
-        console.log(jobSearchKeyword);
-    } else
+    // if (localStorage.length !== 0) {
+    //     jobSearchKeyword = localStorage.getItem("jobName");
+    //     locationSearchKeyword = localStorage.getItem("locationName");
+    //     console.log(jobSearchKeyword);
+    // } else
     if (jobSearchBox.val() === "") {
         return;
     }
     if (jobSearchBox.val() !== "") {
         jobSearchKeyword = jobSearchBox.val();
-        localStorage.setItem("jobName", jobSearchKeyword);
+        searchResults.push({
+            keyword: jobSearchKeyword,
+            permanent: permanentPositionValue,
+            fulltime: fullTimePositionValue,
+            salarySort: sortBySalaryValue,
+            location: locationSearchKeyword
+        });
 
     }
     if (jobSearchBox.val() !== "" && locationSearchBox.val() === "") {
@@ -67,7 +73,6 @@ function jobSearch() {
 function locationSearch() {
     if (locationSearchBox.val() !== "") {
         locationSearchKeyword = locationSearchBox.val();
-        localStorage.setItem("locationName", locationSearchKeyword);
         jobSearch();
     }
 }
