@@ -74,11 +74,13 @@ function appStart() {
 
 jobSearchButton.on("click", function () {
     jobSearch();
+    renderBookResults();
 });
 
 jobSearchBox.keypress(function (event) {
     if (event.keyCode == 13 || event.which == 13) {
         jobSearch();
+        renderBookResults();
     }
 });
 
@@ -127,52 +129,69 @@ appStart();
 // =============================================================================================================
 // Anna's Code
 // =============================================================================================================
-// const searchTerm = $("#jobSearch").val();
-// const queryURL = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm;
 
-$.ajax({
-    url: "https://www.googleapis.com/books/v1/volumes?q=javascript",
-    method: "GET"
-}).then(function (response) {
-    console.log(response);
-    let bookArray = response.items;
-    console.log(bookArray)
-    const displayBookSlide = $(".slides");
+function renderBookResults() {
+    $(".booksH3").removeClass("hidden");
+    const searchTerm = jobSearchBox.val();
+    const queryURL = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm;
 
-    for (let i = 0; i < 5; i++) {
-        const newDiv = $("<div>").addClass(`slide-${i+1}`);
-        const bookDiv = $("<div>").addClass("pure-g bookDetails");
-        const imageDiv = $("<div>").addClass("pure-u-5-24 pure-u-sm-1");
-        const bookThumbnail = $("<img>").attr({
-            src: bookArray[i].volumeInfo.imageLinks.thumbnail,
-            alt: "book cover"
-        });
-        imageDiv.append(bookThumbnail);
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+        let bookArray = response.items;
+        const displayBookSlide = $(".slides");
 
-        const bookDescriptionDiv = $("<div>").addClass("pure-u-19-24 pure-u-sm-1");
+        for (let i = 0; i < 5; i++) {
+            const newDiv = $("<div>").addClass(`slide-${i+1}`);
+            const bookDiv = $("<div>").addClass("pure-g bookDetails");
+            const imageDiv = $("<div>").addClass("pure-u-5-24 pure-u-sm-1");
+            const bookThumbnail = $("<img>").attr({
+                src: bookArray[i].volumeInfo.imageLinks.thumbnail,
+                alt: "book cover"
+            });
+            imageDiv.append(bookThumbnail);
 
-        const bookTitle = $("<h3>").addClass("bookTitle");
-        bookTitle.text(`${bookArray[i].volumeInfo.title}: ${bookArray[i].volumeInfo.subtitle}`);
-        const rating = $("<h4>").addClass("bookRating");
-        rating.html(`Rating: ${bookArray[i].volumeInfo.averageRating}`);
+            const bookDescriptionDiv = $("<div>").addClass("pure-u-19-24 pure-u-sm-1");
 
-        const bookDescription = $("<p>").addClass("bookDescription");
-        const description = bookArray[i].volumeInfo.description;
-        bookDescription.text(description);
+            const bookTitleDisplay = $("<h3>").addClass("bookTitle");
+            const booktitle = bookArray[i].volumeInfo.title;
+            const subtitle = bookArray[i].volumeInfo.subtitle;
+                if (subtitle) {
+                    bookTitleDisplay.text(`${booktitle}: ${subtitle}`);
+                } else {
+                    bookTitleDisplay.text(`${booktitle}`);
+                }
+            
+            const ratingDisplay = $("<h4>").addClass("bookRating");
+            const rating = bookArray[i].volumeInfo.averageRating;
+                if (rating) {
+                    ratingDisplay.html(`Rating: ${rating}`);
+                } else {
+                    ratingDisplay.text('');
+                }
 
-        const bookPurchase = $("<a>").addClass("bookBuy");
-        bookPurchase.text("Click here for more information");
-        bookPurchase.attr("href", bookArray[i].volumeInfo.infoLink)
+            const bookDescription = $("<p>").addClass("bookDescription");
+            const description = bookArray[i].volumeInfo.description;
+            bookDescription.text(description);
 
-        bookDescriptionDiv.append(bookTitle);
-        bookDescriptionDiv.append(rating);
-        bookDescriptionDiv.append(bookDescription);
-        bookDescriptionDiv.append(bookPurchase);
+            const bookPurchase = $("<a>").addClass("bookBuy");
+            bookPurchase.text("Click here for more information");
+            bookPurchase.attr({
+                href: bookArray[i].volumeInfo.infoLink,
+                target: "_blank"
+            })
 
-        bookDiv.append(imageDiv);
-        bookDiv.append(bookDescriptionDiv);
-        newDiv.append(bookDiv);
+            bookDescriptionDiv.append(bookTitleDisplay);
+            bookDescriptionDiv.append(ratingDisplay);
+            bookDescriptionDiv.append(bookDescription);
+            bookDescriptionDiv.append(bookPurchase);
 
-        displayBookSlide.append(newDiv);
-    }
-});
+            bookDiv.append(imageDiv);
+            bookDiv.append(bookDescriptionDiv);
+            newDiv.append(bookDiv);
+
+            displayBookSlide.append(newDiv);
+        }
+    });
+}
