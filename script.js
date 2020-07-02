@@ -86,11 +86,13 @@ jobSearchBox.keypress(function (event) {
 
 locationSearchButton.on("click", function () {
     locationSearch();
+    renderBookResults();
 });
 
 locationSearchBox.keypress(function (event) {
     if (event.keyCode == 13 || event.which == 13) {
         locationSearch();
+        renderBookResults();
     }
 });
 
