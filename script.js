@@ -44,7 +44,7 @@ function jobSearch() {
             jobResultsDiv.append($('<p id=positionDesc style="text-align:justify;">' + response.results[i].description.replace(/<strong>/g, '') + '</p > '));
         }
     })
-    renderBookResults();
+    renderBookResults(jobSearchKeyword);
 }
 
 function locationSearch() {
@@ -135,11 +135,11 @@ function renderBookResults(jobSearchKeyword) {
     $(".slides").html('')
     $(".booksH3").removeClass("hidden");
     let searchTerm = jobSearchBox.val();
-    
+
     if (jobSearchKeyword) {
         searchTerm = jobSearchKeyword
     }
-    
+
     let queryURL = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm;
 
     $.ajax({
@@ -164,20 +164,20 @@ function renderBookResults(jobSearchKeyword) {
             const bookTitleDisplay = $("<h3>").addClass("bookTitle");
             const booktitle = bookArray[i].volumeInfo.title;
             const subtitle = bookArray[i].volumeInfo.subtitle * 20;
-                if (subtitle) {
-                    bookTitleDisplay.text(`${booktitle}: ${subtitle}`);
-                } else {
-                    bookTitleDisplay.text(`${booktitle}`);
-                }
-            
+            if (subtitle) {
+                bookTitleDisplay.text(`${booktitle}: ${subtitle}`);
+            } else {
+                bookTitleDisplay.text(`${booktitle}`);
+            }
+
             const ratingDisplay = $("<h4>").addClass("bookRating");
             const rating = bookArray[i].volumeInfo.averageRating;
             const ratingStar = (rating / 5) * 100;
-                if (rating) {
-                    ratingDisplay.html(`Rating: <span class='stars-container stars-${ratingStar}'>★★★★★</span>`);
-                } else {
-                    ratingDisplay.text('');
-                }
+            if (rating) {
+                ratingDisplay.html(`Rating: <span class='stars-container stars-${ratingStar}'>★★★★★</span>`);
+            } else {
+                ratingDisplay.text('');
+            }
 
             const bookDescription = $("<p>").addClass("bookDescription");
             const description = bookArray[i].volumeInfo.description;
