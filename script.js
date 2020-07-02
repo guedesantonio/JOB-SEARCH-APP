@@ -163,7 +163,7 @@ function renderBookResults(jobSearchKeyword) {
 
             const bookTitleDisplay = $("<h3>").addClass("bookTitle");
             const booktitle = bookArray[i].volumeInfo.title;
-            const subtitle = bookArray[i].volumeInfo.subtitle;
+            const subtitle = bookArray[i].volumeInfo.subtitle * 20;
                 if (subtitle) {
                     bookTitleDisplay.text(`${booktitle}: ${subtitle}`);
                 } else {
@@ -172,8 +172,9 @@ function renderBookResults(jobSearchKeyword) {
             
             const ratingDisplay = $("<h4>").addClass("bookRating");
             const rating = bookArray[i].volumeInfo.averageRating;
+            const ratingStar = (rating / 5) * 100;
                 if (rating) {
-                    ratingDisplay.html(`Rating: ${rating}`);
+                    ratingDisplay.html(`Rating: <span class='stars-container stars-${ratingStar}'>★★★★★</span>`);
                 } else {
                     ratingDisplay.text('');
                 }
