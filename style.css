@@ -1,5 +1,4 @@
-
- /* * -- BASE STYLES -- **********************************************************/
+/* * -- BASE STYLES -- **********************************************************/
 
 body {
     color: BLACK;
@@ -25,7 +24,7 @@ h2 {
     color: black;
     font-weight: 500;
     text-shadow: 0 1px 1px white;
-    margin-top: 60px; 
+    margin-top: 60px;
 }
 
 h3 {
@@ -48,7 +47,7 @@ p {
 .booksH3 {
     display: flex;
     justify-content: CENTER;
-    padding:20px;
+    padding: 20px;
 }
 
 .bookLink {
@@ -84,7 +83,7 @@ p {
  * Make the menu have a very faint box-shadow.
  */
 .pure-menu {
-    box-shadow: 0 1px 1px rgba(0,0,0, 0.10);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.10);
 }
 
 /*
@@ -104,15 +103,15 @@ p {
     display: table;
 }
 
-    .banner-head {
-        display: table-cell;
-        vertical-align: middle;
-        margin-bottom: 0;
-        font-size: 2em;
-        color: black;
-        font-weight: 500;
-        text-shadow: 0 4px 4px white;
-    }
+.banner-head {
+    display: table-cell;
+    vertical-align: middle;
+    margin-bottom: 0;
+    font-size: 2em;
+    color: black;
+    font-weight: 500;
+    text-shadow: 0 4px 4px white;
+}
 
 /*
  resultsDiv Styling*********************************************************
@@ -120,7 +119,6 @@ p {
 
 .resultsDiv {
     margin-bottom: 3.125em;
-    text-align: center;
     max-width: 980px;
     margin: 0 auto;
 }
@@ -138,9 +136,9 @@ p {
     width: 100%;
 }
 
-    .footer a {
-        color: #ddd;
-    }
+.footer a {
+    color: #ddd;
+}
 
 /* animated search bar **********************************************************/
 
@@ -153,7 +151,7 @@ p {
     position: absolute;
     top: 0%;
     left: 50%;
-    transform:  translate(-50%,50%);
+    transform: translate(-50%, 50%);
     background: #2f3640;
     height: 40px;
     border-radius: 40px;
@@ -164,7 +162,7 @@ p {
     position: absolute;
     top: 60%;
     left: 50%;
-    transform:  translate(-50%,50%);
+    transform: translate(-50%, 50%);
     background: #2f3640;
     height: 40px;
     border-radius: 40px;
@@ -172,15 +170,15 @@ p {
 
 }
 
-    .searchBox:hover > .searchInput {
+.searchBox:hover>.searchInput {
     width: 240px;
     padding: 0 6px;
-    }
+}
 
-    .searchBox:hover > .searchButton {
+.searchBox:hover>.searchButton {
     background: white;
-    color : #2f3640;
-    }
+    color: #2f3640;
+}
 
 .searchButton {
     color: white;
@@ -195,16 +193,16 @@ p {
     transition: 0.4s;
 }
 
-    .searchInput:not(:placeholder-shown) {
-        width: 150px;
-        padding: 0 6px;
-    }
+.searchInput:not(:placeholder-shown) {
+    width: 150px;
+    padding: 0 6px;
+}
 
 .searchInput {
-    border:none;
+    border: none;
     background: none;
-    outline:none;
-    float:left;
+    outline: none;
+    float: left;
     padding: 0;
     color: white;
     font-size: 16px;
@@ -217,14 +215,14 @@ p {
 
 .checkboxDiv {
     display: flex;
-    
+
     align-items: center;
     justify-content: center;
     padding-top: 20px;
 }
 
 .checkbox {
-    padding:30px;
+    padding: 30px;
     white-space: nowrap;
 }
 
@@ -258,38 +256,39 @@ p {
     justify-content: center;
     background: linear-gradient(to bottom, #74ABE2, #5563DE);
     font-family: 'Ropa Sans', sans-serif;
-  }
-  
+}
+
 .slider {
-width: 100%;
-text-align: center;
-overflow: hidden;
+    width: 100%;
+    text-align: center;
+    overflow: hidden;
 }
 
 .slides {
-display: flex;
-overflow-x: auto;
-scroll-snap-type: x mandatory;
-scroll-behavior: smooth;
--webkit-overflow-scrolling: touch;
-scroll-snap-points-x: repeat(300px);
-scroll-snap-type: mandatory;
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-points-x: repeat(300px);
+    scroll-snap-type: mandatory;
 }
-  .slides::-webkit-scrollbar {
+
+.slides::-webkit-scrollbar {
     width: 10px;
     height: 10px;
-  }
+}
 
-  .slides::-webkit-scrollbar-thumb {
+.slides::-webkit-scrollbar-thumb {
     background: black;
     border-radius: 10px;
-  }
+}
 
-  .slides::-webkit-scrollbar-track {
+.slides::-webkit-scrollbar-track {
     background: transparent;
-  }
+}
 
-  .slides > div {
+.slides>div {
     scroll-snap-align: start;
     flex-shrink: 0;
     width: 100%;
@@ -305,51 +304,54 @@ scroll-snap-type: mandatory;
     justify-content: center;
     align-items: center;
     font-size: 15px;
-  }
+}
 
-  .bookDetails {
+.bookDetails {
     padding: 0 100px 0 100px;
     text-align: left;
-  }
+}
 
-  .bookDetails img {
+.bookDetails img {
     padding-left: 30px;
     padding-top: 30px;
     width: 20%;
     height: 80%;
-  }
-
-  /* Start copy code from http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/ */
-  /* styles for '...' */ 
-.bookDescription {
-  overflow: hidden;
-  position: relative; 
-  line-height: 1.2em;
-  max-height: 3.6em; 
-  text-align: justify;  
-  margin-right: -1em;
-  padding-right: 1em;
 }
+
+/* Start copy code from http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/ */
+/* styles for '...' */
+.bookDescription {
+    overflow: hidden;
+    position: relative;
+    line-height: 1.2em;
+    max-height: 3.6em;
+    text-align: justify;
+    margin-right: -1em;
+    padding-right: 1em;
+}
+
 /* create the ... */
 .bookDescription:before {
-  content: '...';
-  position: absolute;
-  right: 0;
-  bottom: 0;
+    content: '...';
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }
+
 /* hide ... if we have text, which is less than or equal to max lines */
 .bookDescription:after {
-  content: '';
-  position: absolute;
-  right: 0;
-  width: 1em;
-  height: 1em;
-  margin-top: 0.2em;
-  background:#eeeeee;
+    content: '';
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    margin-top: 0.2em;
+    background: #eeeeee;
 }
+
 /* End copy code from http://hackingui.com/front-end/a-pure-css-solution-for-multiline-text-truncation/ */
 
-  .author-info {
+.author-info {
     background: rgba(0, 0, 0, 0.75);
     color: white;
     padding: 0.75rem;
@@ -359,57 +361,57 @@ scroll-snap-type: mandatory;
     left: 0;
     width: 100%;
     margin: 0;
-  }
+}
 
-    .author-info a {
-        color: white;
-    }
+.author-info a {
+    color: white;
+}
 
-  img {
+img {
     object-fit: cover;
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-  }
-  
-    .slider > a {
-        display: inline-flex;
-        width: 1.5rem;
-        height: 1.5rem;
-        background: white;
-        text-decoration: none;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        margin: 0 0 0.5rem 0;
-        position: relative;
-    }
+}
 
-    .slider > a:active {
-        top: 1px;
-    }
+.slider>a {
+    display: inline-flex;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: white;
+    text-decoration: none;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin: 0 0 0.5rem 0;
+    position: relative;
+}
 
-    .slider > a:focus {
-        background: #000;
-    }
-  
+.slider>a:active {
+    top: 1px;
+}
+
+.slider>a:focus {
+    background: #000;
+}
+
 /* NOT SURE WHAT THIS IS FOR **************** */
-  /* Don't need button navigation
+/* Don't need button navigation
   @supports (scroll-snap-type) {
     .slider > a {
       display: none;
     }
   }
    */
-   
-  /* Resources **********************************************************/
+
+/* Resources **********************************************************/
 
 
 @media (max-width: 620px) {
 
-    .searchBox:hover > .searchInput {
+    .searchBox:hover>.searchInput {
         width: 150px;
         padding: 0 6px;
     }
@@ -434,7 +436,7 @@ scroll-snap-type: mandatory;
         font-size: 4em;
     }
 
-    .searchBox:hover > .searchInput {
+    .searchBox:hover>.searchInput {
         width: 150px;
         padding: 0 6px;
     }

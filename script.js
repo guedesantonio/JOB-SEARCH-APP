@@ -44,6 +44,7 @@ function jobSearch() {
             jobResultsDiv.append($('<p id=positionDesc style="text-align:justify;">' + response.results[i].description.replace(/<strong>/g, '') + '</p > '));
         }
     })
+    renderBookResults();
 }
 
 function locationSearch() {
@@ -69,30 +70,27 @@ function appStart() {
         }
         locationSearchKeyword = searchResults[searchResults.length - 1].location;
         jobSearch();
+        renderBookResults(jobSearchKeyword);
     }
 }
 
 jobSearchButton.on("click", function () {
     jobSearch();
-    renderBookResults();
 });
 
 jobSearchBox.keypress(function (event) {
     if (event.keyCode == 13 || event.which == 13) {
         jobSearch();
-        renderBookResults();
     }
 });
 
 locationSearchButton.on("click", function () {
     locationSearch();
-    renderBookResults();
 });
 
 locationSearchBox.keypress(function (event) {
     if (event.keyCode == 13 || event.which == 13) {
         locationSearch();
-        renderBookResults();
     }
 });
 
@@ -132,10 +130,17 @@ appStart();
 // Anna's Code
 // =============================================================================================================
 
-function renderBookResults() {
+
+function renderBookResults(jobSearchKeyword) {
+    $(".slides").html('')
     $(".booksH3").removeClass("hidden");
-    const searchTerm = jobSearchBox.val();
-    const queryURL = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm;
+    let searchTerm = jobSearchBox.val();
+    
+    if (jobSearchKeyword) {
+        searchTerm = jobSearchKeyword
+    }
+    
+    let queryURL = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm;
 
     $.ajax({
         url: queryURL,
@@ -195,5 +200,6 @@ function renderBookResults() {
 
             displayBookSlide.append(newDiv);
         }
+        document.getElementById("booksResult").scrollIntoView();
     });
 }
