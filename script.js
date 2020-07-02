@@ -200,5 +200,6 @@ function renderBookResults(jobSearchKeyword) {
 
             displayBookSlide.append(newDiv);
         }
+        document.getElementById("booksResult").scrollIntoView();
     });
 }
