@@ -2,7 +2,7 @@
  /* * -- BASE STYLES -- **********************************************************/
 
 body {
-    color: #526066;
+    color: BLACK;
     position: relative;
     padding-bottom: 20px;
     min-height: 100vh;
@@ -229,6 +229,24 @@ p {
 }
 
 
+/* Buttons******************** */
+.buttonDiv {
+    display: flex;
+    
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+.button-secondary {
+
+    color: black;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    background:whitesmoke;
+    margin:10px;
+}
+
 
 /* ANIMATED CAROUSEL *************************************************************/
 
@@ -397,6 +415,9 @@ scroll-snap-type: mandatory;
     }
 
     .checkboxDiv {
+        flex-direction: column;
+    }
+    .buttonDiv {
         flex-direction: column;
     }
 }
