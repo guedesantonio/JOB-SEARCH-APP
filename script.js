@@ -16,8 +16,12 @@ let permanentPositionValue = "";
 let fullTimePositionValue = "";
 let sortBySalaryValue = "";
 let searchResults = [];
+let jobSearchCalls = 0;
 
 function jobSearch() {
+
+    jobSearchCalls++;
+
     if (jobSearchBox.val() === "" && jobSearchKeyword === "") {
         return;
     }
@@ -53,9 +57,12 @@ function locationSearch() {
 }
 
 function appStart() {
+
     if (localStorage.length !== 0) {
         searchResults = JSON.parse(localStorage.getItem("searchParameters"));
         jobSearchKeyword = searchResults[searchResults.length - 1].keyword;
+        jobSearchBox.val(jobSearchKeyword);
+
         permanentPositionValue = searchResults[searchResults.length - 1].permanent;
         if (permanentPositionValue !== "") {
             document.getElementById("checkPerm").checked = true;
@@ -69,6 +76,7 @@ function appStart() {
             document.getElementById("checkSalaryOrder").checked = true;
         }
         locationSearchKeyword = searchResults[searchResults.length - 1].location;
+        locationSearchBox.val(locationSearchKeyword);
         jobSearch();
         renderBookResults(jobSearchKeyword);
     }
@@ -201,6 +209,10 @@ function renderBookResults(jobSearchKeyword) {
 
             displayBookSlide.append(newDiv);
         }
-        document.getElementById("booksResult").scrollIntoView();
+
+        if (jobSearchCalls > 1) {
+            document.getElementById("booksResult").scrollIntoView();
+        }
+
     });
 }
