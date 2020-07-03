@@ -217,6 +217,7 @@ salarySortCheckBox.on("click", function () {
 
 clearSearchButton.on("click", function () {
     localStorage.clear();
+    searchResults = [];
     $(".previousSearches").html('');
     clearSearchButton.addClass('hidden');
 })
