@@ -10,6 +10,7 @@ const jobResultsDiv = $("#jobResult")
 const permanentPositionCheckBox = $("#checkPerm");
 const fullTimeJobsCheckBox = $("#checkFullTime");
 const salarySortCheckBox = $("#checkSalaryOrder");
+const clearSearchButton = $("#clearButton");
 let jobSearchKeyword = "";
 let locationSearchKeyword = "";
 let permanentPositionValue = "";
@@ -59,28 +60,56 @@ function locationSearch() {
 function appStart() {
 
     if (localStorage.length !== 0) {
-        searchResults = JSON.parse(localStorage.getItem("searchParameters"));
-        jobSearchKeyword = searchResults[searchResults.length - 1].keyword;
-        jobSearchBox.val(jobSearchKeyword);
 
-        permanentPositionValue = searchResults[searchResults.length - 1].permanent;
-        if (permanentPositionValue !== "") {
-            document.getElementById("checkPerm").checked = true;
+        //Retrieving the last 12 search results from the local storage (If there are less than 12 search results it will retrieve them all)
+        searchResults = JSON.parse(localStorage.getItem("searchParameters")).slice(Math.max(JSON.parse(localStorage.getItem("searchParameters")).length - 12, 0));
+        let buttondiv1 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
+        let buttondiv2 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
+        let buttondiv3 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
+        // Rendering 4 buttons per row for the last 12 search results (3 rows in total of 4 columns each)
+        $(".previousSearches").toggleClass("hidden");
+        for (let i = 0; i < 4; i++) {
+            let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
+            buttondiv1.append(button);
         }
-        fullTimePositionValue = searchResults[searchResults.length - 1].fulltime;
-        if (fullTimePositionValue !== "") {
-            document.getElementById("checkFullTime").checked = true;
+        $(".previousSearches").prepend(buttondiv1);
+
+        for (let i = 4; i < 8; i++) {
+            let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
+            buttondiv2.append(button);
         }
-        sortBySalaryValue = searchResults[searchResults.length - 1].salarySort;
-        if (sortBySalaryValue !== "") {
-            document.getElementById("checkSalaryOrder").checked = true;
+        $(".previousSearches").prepend(buttondiv2);
+
+        for (let i = 8; i < 12; i++) {
+            let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
+            buttondiv3.append(button);
         }
-        locationSearchKeyword = searchResults[searchResults.length - 1].location;
-        locationSearchBox.val(locationSearchKeyword);
-        jobSearch();
-        renderBookResults(jobSearchKeyword);
+        $(".previousSearches").prepend(buttondiv3);
+
     }
+
+
+    jobSearchKeyword = searchResults[searchResults.length - 1].keyword;
+    jobSearchBox.val(jobSearchKeyword);
+
+    permanentPositionValue = searchResults[searchResults.length - 1].permanent;
+    if (permanentPositionValue !== "") {
+        document.getElementById("checkPerm").checked = true;
+    }
+    fullTimePositionValue = searchResults[searchResults.length - 1].fulltime;
+    if (fullTimePositionValue !== "") {
+        document.getElementById("checkFullTime").checked = true;
+    }
+    sortBySalaryValue = searchResults[searchResults.length - 1].salarySort;
+    if (sortBySalaryValue !== "") {
+        document.getElementById("checkSalaryOrder").checked = true;
+    }
+    locationSearchKeyword = searchResults[searchResults.length - 1].location;
+    locationSearchBox.val(locationSearchKeyword);
+    jobSearch();
+    renderBookResults(jobSearchKeyword);
 }
+
 
 jobSearchButton.on("click", function () {
     jobSearch();
@@ -210,6 +239,7 @@ function renderBookResults(jobSearchKeyword) {
             displayBookSlide.append(newDiv);
         }
 
+        //Ensures that the page scrolling only happens after the first run of the program by counting the number of times the jobSearch function has been called.
         if (jobSearchCalls > 1) {
             document.getElementById("booksResult").scrollIntoView();
         }
