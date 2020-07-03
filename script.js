@@ -62,12 +62,21 @@ function appStart() {
     if (localStorage.length !== 0) {
 
         //Retrieving the last 12 search results from the local storage (If there are less than 12 search results it will retrieve them all)
+
         searchResults = JSON.parse(localStorage.getItem("searchParameters")).slice(Math.max(JSON.parse(localStorage.getItem("searchParameters")).length - 12, 0));
-        // let buttondiv1 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
-        // let buttondiv2 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
-        // let buttondiv3 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
+        let buttondiv1 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
+        let buttondiv2 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
+        let buttondiv3 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
         // Rendering 4 buttons per row for the last 12 search results (3 rows in total of 4 columns each)
-        // $(".previousSearches").toggleClass("hidden");
+        $(".previousSearches").toggleClass("hidden");
+        if (searchResults.length < 3) {
+            for (let i = 0; i < searchResults.length; i++) {
+                let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
+                buttondiv1.append(button);
+            }
+            $(".previousSearches").prepend(buttondiv1);
+        }
+
         // for (let i = 0; i < 4; i++) {
         //     let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
         //     buttondiv1.append(button);
@@ -237,8 +246,8 @@ function renderBookResults(jobSearchKeyword) {
             displayBookSlide.append(newDiv);
         }
 
-        //Ensures that the page scrolling only happens after the first run of the program by counting the number of times the jobSearch function has been called. Also, ensures that the page auto scrolling works if there is nothing inside the local storage.
-        if (jobSearchCalls > 1 || (jobSearchCalls === 1 && localStorage.length === 1)) {
+        //Ensures that the page scrolling only happens after the first run of the program by counting the number of times the jobSearch function has been called. Also, ensures that the page auto scrolling works if the user is doing the first search using the app(otherwise the auto scrolling does not work if there is nothing inside the local storage and user is doing the very first search).
+        if (jobSearchCalls > 1 || (jobSearchCalls === 1 && searchResults.length === 1)) {
             document.getElementById("booksResult").scrollIntoView();
         }
 
