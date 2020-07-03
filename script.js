@@ -11,6 +11,7 @@ const permanentPositionCheckBox = $("#checkPerm");
 const fullTimeJobsCheckBox = $("#checkFullTime");
 const salarySortCheckBox = $("#checkSalaryOrder");
 const clearSearchButton = $("#clearButton");
+const previousSearchesSection = $(".previousSearches");
 let jobSearchKeyword = "";
 let locationSearchKeyword = "";
 let permanentPositionValue = "";
@@ -18,6 +19,7 @@ let fullTimePositionValue = "";
 let sortBySalaryValue = "";
 let searchResults = [];
 let jobSearchCalls = 0;
+let previousSearchButtonClickCount = 0;
 
 function jobSearch() {
 
@@ -62,6 +64,7 @@ function jobSearch() {
             jobResultsDiv.append($('<p id=positionDesc style="text-align:justify;">' + response.results[i].description.replace(/<strong>/g, '') + '</p > '));
         }
     })
+
     renderBookResults(jobSearchKeyword);
 }
 
@@ -75,53 +78,6 @@ function appStart() {
     if (localStorage.length !== 0) {
 
         searchResults = JSON.parse(localStorage.getItem("searchParameters"));
-        let buttondiv1 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
-        let buttondiv2 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
-        let buttondiv3 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
-
-        // Rendering 4 buttons per row for the last 12 search results (3 rows in total of 4 columns each)
-        clearSearchButton.removeClass("hidden");
-        //If we have 4 results or less
-        if (searchResults.length <= 4) {
-            for (let i = 0; i < searchResults.length; i++) {
-                let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-                buttondiv1.prepend(button);
-            }
-            $(".previousSearches").prepend(buttondiv1);
-        }
-
-        //If we have between 4 and 8 results (excluding 4)
-        if (searchResults.length > 4 && searchResults.length <= 8) {
-            for (let i = 0; i < 4; i++) {
-                let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-                buttondiv1.prepend(button);
-            }
-            for (let i = 4; i < searchResults.length; i++) {
-                let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-                buttondiv2.prepend(button);
-            }
-            $(".previousSearches").prepend(buttondiv1);
-            $(".previousSearches").prepend(buttondiv2);
-        }
-
-        // If we have between 8 and 12 results (excluding 8)
-        if (searchResults.length > 8 && searchResults.length <= 12) {
-            for (let i = 0; i < 4; i++) {
-                let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-                buttondiv1.prepend(button);
-            }
-            for (let i = 4; i < 8; i++) {
-                let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-                buttondiv2.prepend(button);
-            }
-            for (let i = 8; i < searchResults.length; i++) {
-                let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-                buttondiv3.prepend(button);
-            }
-            $(".previousSearches").prepend(buttondiv1);
-            $(".previousSearches").prepend(buttondiv2);
-            $(".previousSearches").prepend(buttondiv3);
-        }
 
         jobSearchKeyword = searchResults[searchResults.length - 1].keyword;
         jobSearchBox.val(jobSearchKeyword);
@@ -154,6 +110,57 @@ function appStart() {
         })
 
         renderBookResults(jobSearchKeyword);
+        renderSearchButtons();
+    }
+}
+
+function renderSearchButtons() {
+    let buttondiv1 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv test1'>");
+    let buttondiv2 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv test2'>");
+    let buttondiv3 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv test3'>");
+
+    // Rendering 4 buttons per row for the last 12 search results (3 rows in total of 4 columns each)
+    clearSearchButton.removeClass("hidden");
+    //If we have 4 results or less
+    if (searchResults.length <= 4) {
+        for (let i = 0; i < searchResults.length; i++) {
+            let button = $("<button class='button-secondary pure-button' data-index=" + i + ">" + searchResults[i].keyword + "</button>");
+            buttondiv1.prepend(button);
+        }
+        $(".previousSearches").prepend(buttondiv1);
+    }
+
+    //If we have between 4 and 8 results (excluding 4)
+    if (searchResults.length > 4 && searchResults.length <= 8) {
+        for (let i = 0; i < 4; i++) {
+            let button = $("<button class='button-secondary pure-button' data-index=" + i + ">" + searchResults[i].keyword + "</button>");
+            buttondiv1.prepend(button);
+        }
+        for (let i = 4; i < searchResults.length; i++) {
+            let button = $("<button class='button-secondary pure-button' data-index=" + i + ">" + searchResults[i].keyword + "</button>");
+            buttondiv2.prepend(button);
+        }
+        $(".previousSearches").prepend(buttondiv1);
+        $(".previousSearches").prepend(buttondiv2);
+    }
+
+    // If we have between 8 and 12 results (excluding 8)
+    if (searchResults.length > 8 && searchResults.length <= 12) {
+        for (let i = 0; i < 4; i++) {
+            let button = $("<button class='button-secondary pure-button' data-index=" + i + ">" + searchResults[i].keyword + "</button>");
+            buttondiv1.prepend(button);
+        }
+        for (let i = 4; i < 8; i++) {
+            let button = $("<button class='button-secondary pure-button' data-index=" + i + ">" + searchResults[i].keyword + "</button>");
+            buttondiv2.prepend(button);
+        }
+        for (let i = 8; i < searchResults.length; i++) {
+            let button = $("<button class='button-secondary pure-button' data-index=" + i + ">" + searchResults[i].keyword + "</button>");
+            buttondiv3.prepend(button);
+        }
+        $(".previousSearches").prepend(buttondiv1);
+        $(".previousSearches").prepend(buttondiv2);
+        $(".previousSearches").prepend(buttondiv3);
     }
 }
 
@@ -212,6 +219,49 @@ clearSearchButton.on("click", function () {
     localStorage.clear();
     $(".previousSearches").html('');
     clearSearchButton.addClass('hidden');
+})
+
+previousSearchesSection.on("click", function () {
+
+    previousSearchButtonClickCount++;
+
+    jobSearchKeyword = searchResults[event.target.dataset.index].keyword;
+    jobSearchBox.val(jobSearchKeyword);
+
+    permanentPositionValue = searchResults[event.target.dataset.index].permanent;
+    if (permanentPositionValue !== "") {
+        document.getElementById("checkPerm").checked = true;
+    } else {
+        document.getElementById("checkPerm").checked = false;
+    }
+    fullTimePositionValue = searchResults[event.target.dataset.index].fulltime;
+    if (fullTimePositionValue !== "") {
+        document.getElementById("checkFullTime").checked = true;
+    } else {
+        document.getElementById("checkFullTime").checked = false;
+    }
+    sortBySalaryValue = searchResults[event.target.dataset.index].salarySort;
+    if (sortBySalaryValue !== "") {
+        document.getElementById("checkSalaryOrder").checked = true;
+    } else {
+        document.getElementById("checkSalaryOrder").checked = false;
+    }
+    locationSearchKeyword = searchResults[event.target.dataset.index].location;
+    locationSearchBox.val(locationSearchKeyword);
+
+    jobResultsDiv.html("")
+    $.ajax({
+        url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=10&what=" + jobSearchKeyword + "&where=" + locationSearchKeyword + "&permanent=" + permanentPositionValue + "&full_time=" + fullTimePositionValue + sortBySalaryValue + "&content-type=application/json",
+        method: "GET"
+    }).then(function (response) {
+        console.log(response);
+        for (let i = 0; i < response.results.length; i++) {
+            jobResultsDiv.append($('<a id="positionLink" href="' + response.results[i].redirect_url + '" target="_blank"><h3 id="positionName style="text-align:left;">' + response.results[i].title.replace(/<strong>/g, '') + '</h3></a>'));
+            jobResultsDiv.append($('<p id=positionDesc style="text-align:justify;">' + response.results[i].description.replace(/<strong>/g, '') + '</p > '));
+        }
+    })
+
+    renderBookResults(jobSearchKeyword);
 })
 
 appStart();
@@ -293,7 +343,7 @@ function renderBookResults(jobSearchKeyword) {
         }
 
         //Ensures that the page scrolling only happens after the first run of the program by counting the number of times the jobSearch function has been called. Also, ensures that the page auto scrolling works if the user is doing the first search using the app(otherwise the auto scrolling does not work if there is nothing inside the local storage and user is doing the very first search).
-        if (jobSearchCalls > 1 || (jobSearchCalls === 1 && searchResults.length >= 1)) {
+        if (jobSearchCalls > 1 || (jobSearchCalls === 1 && searchResults.length >= 1) || previousSearchButtonClickCount > 1) {
             document.getElementById("booksResult").scrollIntoView();
         }
 
