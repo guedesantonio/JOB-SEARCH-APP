@@ -28,13 +28,26 @@ function jobSearch() {
     }
     if (jobSearchBox.val() !== "") {
         jobSearchKeyword = jobSearchBox.val();
-        searchResults.push({
-            keyword: jobSearchKeyword,
-            permanent: permanentPositionValue,
-            fulltime: fullTimePositionValue,
-            salarySort: sortBySalaryValue,
-            location: locationSearchKeyword
-        });
+        //checks to see whether we have 12 items in our search results.If so, removes the very first item and adds the latest search term to the search results so it can limit the total reults to 12 while updating the list with the latest search result
+        if (searchResults.length < 12) {
+            searchResults.push({
+                keyword: jobSearchKeyword,
+                permanent: permanentPositionValue,
+                fulltime: fullTimePositionValue,
+                salarySort: sortBySalaryValue,
+                location: locationSearchKeyword
+            });
+        } else {
+            searchResults.shift();
+            searchResults.push({
+                keyword: jobSearchKeyword,
+                permanent: permanentPositionValue,
+                fulltime: fullTimePositionValue,
+                salarySort: sortBySalaryValue,
+                location: locationSearchKeyword
+            });
+        }
+
         localStorage.setItem("searchParameters", JSON.stringify(searchResults));
     }
 
@@ -63,13 +76,13 @@ function appStart() {
 
         //Retrieving the last 12 search results from the local storage (If there are less than 12 search results it will retrieve them all)
 
-        searchResults = JSON.parse(localStorage.getItem("searchParameters")).slice(Math.max(JSON.parse(localStorage.getItem("searchParameters")).length - 12, 0));
+        searchResults = JSON.parse(localStorage.getItem("searchParameters"));
         let buttondiv1 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
         let buttondiv2 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
         let buttondiv3 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
         // Rendering 4 buttons per row for the last 12 search results (3 rows in total of 4 columns each)
         $(".previousSearches").toggleClass("hidden");
-        if (searchResults.length < 3) {
+        if (searchResults.length <= 4) {
             for (let i = 0; i < searchResults.length; i++) {
                 let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
                 buttondiv1.append(button);
@@ -77,23 +90,36 @@ function appStart() {
             $(".previousSearches").prepend(buttondiv1);
         }
 
-        // for (let i = 0; i < 4; i++) {
-        //     let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-        //     buttondiv1.append(button);
-        // }
-        // $(".previousSearches").prepend(buttondiv1);
+        if (searchResults.length > 4 && searchResults.length <= 8) {
+            for (let i = 0; i < 4; i++) {
+                let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
+                buttondiv1.append(button);
+            }
+            for (let i = 4; i < searchResults.length; i++) {
+                let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
+                buttondiv2.append(button);
+            }
+            $(".previousSearches").prepend(buttondiv1);
+            $(".previousSearches").prepend(buttondiv2);
+        }
 
-        // for (let i = 4; i < 8; i++) {
-        //     let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-        //     buttondiv2.append(button);
-        // }
-        // $(".previousSearches").prepend(buttondiv2);
-
-        // for (let i = 8; i < 12; i++) {
-        //     let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-        //     buttondiv3.append(button);
-        // }
-        // $(".previousSearches").prepend(buttondiv3);
+        if (searchResults.length > 8 && searchResults.length <= 12) {
+            for (let i = 0; i < 4; i++) {
+                let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
+                buttondiv1.append(button);
+            }
+            for (let i = 4; i < 8; i++) {
+                let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
+                buttondiv2.append(button);
+            }
+            for (let i = 8; i < searchResults.length; i++) {
+                let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
+                buttondiv3.append(button);
+            }
+            $(".previousSearches").prepend(buttondiv1);
+            $(".previousSearches").prepend(buttondiv2);
+            $(".previousSearches").prepend(buttondiv3);
+        }
 
         jobSearchKeyword = searchResults[searchResults.length - 1].keyword;
         jobSearchBox.val(jobSearchKeyword);
@@ -112,7 +138,19 @@ function appStart() {
         }
         locationSearchKeyword = searchResults[searchResults.length - 1].location;
         locationSearchBox.val(locationSearchKeyword);
-        jobSearch();
+
+        jobResultsDiv.html("")
+        $.ajax({
+            url: "https://api.adzuna.com/v1/api/jobs/gb/search/1?app_id=f960f7d3&app_key=8815afa06c70515964d774a471c8c248&results_per_page=10&what=" + jobSearchKeyword + "&where=" + locationSearchKeyword + "&permanent=" + permanentPositionValue + "&full_time=" + fullTimePositionValue + sortBySalaryValue + "&content-type=application/json",
+            method: "GET"
+        }).then(function (response) {
+            console.log(response);
+            for (let i = 0; i < response.results.length; i++) {
+                jobResultsDiv.append($('<a id="positionLink" href="' + response.results[i].redirect_url + '" target="_blank"><h3 id="positionName style="text-align:left;">' + response.results[i].title.replace(/<strong>/g, '') + '</h3></a>'));
+                jobResultsDiv.append($('<p id=positionDesc style="text-align:justify;">' + response.results[i].description.replace(/<strong>/g, '') + '</p > '));
+            }
+        })
+
         renderBookResults(jobSearchKeyword);
     }
 }
@@ -247,7 +285,7 @@ function renderBookResults(jobSearchKeyword) {
         }
 
         //Ensures that the page scrolling only happens after the first run of the program by counting the number of times the jobSearch function has been called. Also, ensures that the page auto scrolling works if the user is doing the first search using the app(otherwise the auto scrolling does not work if there is nothing inside the local storage and user is doing the very first search).
-        if (jobSearchCalls > 1 || (jobSearchCalls === 1 && searchResults.length === 1)) {
+        if (jobSearchCalls > 1 || (jobSearchCalls === 1 && searchResults.length >= 1)) {
             document.getElementById("booksResult").scrollIntoView();
         }
 
