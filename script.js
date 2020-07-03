@@ -74,47 +74,49 @@ function appStart() {
 
     if (localStorage.length !== 0) {
 
-        //Retrieving the last 12 search results from the local storage (If there are less than 12 search results it will retrieve them all)
-
         searchResults = JSON.parse(localStorage.getItem("searchParameters"));
         let buttondiv1 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
         let buttondiv2 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
         let buttondiv3 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv'>");
+
         // Rendering 4 buttons per row for the last 12 search results (3 rows in total of 4 columns each)
-        $(".previousSearches").toggleClass("hidden");
+        clearSearchButton.removeClass("hidden");
+        //If we have 4 results or less
         if (searchResults.length <= 4) {
             for (let i = 0; i < searchResults.length; i++) {
                 let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-                buttondiv1.append(button);
+                buttondiv1.prepend(button);
             }
             $(".previousSearches").prepend(buttondiv1);
         }
 
+        //If we have between 4 and 8 results (excluding 4)
         if (searchResults.length > 4 && searchResults.length <= 8) {
             for (let i = 0; i < 4; i++) {
                 let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-                buttondiv1.append(button);
+                buttondiv1.prepend(button);
             }
             for (let i = 4; i < searchResults.length; i++) {
                 let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-                buttondiv2.append(button);
+                buttondiv2.prepend(button);
             }
             $(".previousSearches").prepend(buttondiv1);
             $(".previousSearches").prepend(buttondiv2);
         }
 
+        // If we have between 8 and 12 results (excluding 8)
         if (searchResults.length > 8 && searchResults.length <= 12) {
             for (let i = 0; i < 4; i++) {
                 let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-                buttondiv1.append(button);
+                buttondiv1.prepend(button);
             }
             for (let i = 4; i < 8; i++) {
                 let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-                buttondiv2.append(button);
+                buttondiv2.prepend(button);
             }
             for (let i = 8; i < searchResults.length; i++) {
                 let button = $("<button class='button-secondary pure-button'>" + searchResults[i].keyword + "</button>");
-                buttondiv3.append(button);
+                buttondiv3.prepend(button);
             }
             $(".previousSearches").prepend(buttondiv1);
             $(".previousSearches").prepend(buttondiv2);
@@ -204,6 +206,12 @@ salarySortCheckBox.on("click", function () {
         sortBySalaryValue = "";
         jobSearch();
     }
+})
+
+clearSearchButton.on("click", function () {
+    localStorage.clear();
+    $(".previousSearches").html('');
+    clearSearchButton.addClass('hidden');
 })
 
 appStart();
