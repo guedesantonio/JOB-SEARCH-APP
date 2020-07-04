@@ -99,7 +99,7 @@ p {
     filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='https://images.theconversation.com/files/191713/original/file-20171024-30561-ph2byj.jpg?ixlib=rb-1.1.0&rect=0%2C0%2C6440%2C1751&q=45&auto=format&w=926&fit=clip', sizingMethod='scale');
     height: 200px;
     width: 100%;
-    margin-bottom: 3em;
+    padding-top: 200px;
     display: table;
 }
 
@@ -143,6 +143,7 @@ p {
 /* animated search bar **********************************************************/
 
 .searchMain {
+    margin-top: 50px;
     position: relative;
     height: 300px;
 }
@@ -475,7 +476,11 @@ img {
  */
 
 @media(min-width: 767px) {
-
+     
+    .banner {
+        height: 400px;
+        padding-top: 100px;
+    }
     .banner-head {
         font-size: 4em;
     }
@@ -495,6 +500,7 @@ img {
 
     .banner {
         height: 400px;
+        padding-top: 200px;
     }
 
     .banner-head {

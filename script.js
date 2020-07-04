@@ -287,7 +287,7 @@ function renderBookResults() {
     $(".slides").html('')
     $(".booksH3").removeClass("hidden");
     let searchTerm = jobSearchBox.val();
-    
+    // Use keyword from local storage to search books when page is loaded
     if (!searchTerm) {
         searchTerm = jobSearchKeyword
     }
@@ -299,19 +299,21 @@ function renderBookResults() {
     }).then(function (response) {
         let bookArray = response.items;
         const displayBookSlide = $(".slides");
-
+        // Append book results in carousel
         for (let i = 0; i < 5; i++) {
+            // Add carousel slide
             const newDiv = $("<div>").addClass(`slide-${i+1}`);
             const bookDiv = $("<div>").addClass("pure-g bookDetails");
+            // Book cover image div
             const imageDiv = $("<div>").addClass("pure-u-5-24 pure-u-sm-1");
             const bookThumbnail = $("<img>").attr({
                 src: bookArray[i].volumeInfo.imageLinks.thumbnail,
                 alt: "book cover"
             });
             imageDiv.append(bookThumbnail);
-
+            // Div containing book details
             const bookDescriptionDiv = $("<div>").addClass("pure-u-19-24 pure-u-sm-1");
-
+            // Book title with subtitle if available
             const bookTitleDisplay = $("<h3>").addClass("bookTitle");
             const booktitle = bookArray[i].volumeInfo.title;
             const subtitle = bookArray[i].volumeInfo.subtitle * 20;
@@ -320,40 +322,40 @@ function renderBookResults() {
             } else {
                 bookTitleDisplay.text(`${booktitle}`);
             }
-
+            // Rating div
             const ratingDisplay = $("<h4>").addClass("bookRating");
             const rating = bookArray[i].volumeInfo.averageRating;
+            // Display rating out of 5 into stars
             const ratingStar = (rating / 5) * 100;
             if (rating) {
-                ratingDisplay.html(`Rating: <span class='stars-container stars-${ratingStar}'>★★★★★</span>`);
+                ratingDisplay.html(`Rating:` + "&nbsp;" +  `<span class='stars-container stars-${ratingStar}'>★★★★★</span>`);
             } else {
                 ratingDisplay.text('');
             }
-
+            // Book description
             const bookDescription = $("<p>").addClass("bookDescription");
             const description = bookArray[i].volumeInfo.description;
             bookDescription.text(description);
-
+            // Book purchase/more info link
             const bookPurchase = $("<a>").addClass("bookBuy");
             bookPurchase.text("Click here for more information");
             bookPurchase.attr({
                 href: bookArray[i].volumeInfo.infoLink,
                 target: "_blank"
             })
-
+            // Append all book detatils to description div
             bookDescriptionDiv.append(bookTitleDisplay);
             bookDescriptionDiv.append(ratingDisplay);
             bookDescriptionDiv.append(bookDescription);
             bookDescriptionDiv.append(bookPurchase);
-
+            // Append image and descriiption to carousel slide
             bookDiv.append(imageDiv);
             bookDiv.append(bookDescriptionDiv);
             newDiv.append(bookDiv);
-
             displayBookSlide.append(newDiv);
         }
 
-        //Ensures that the page scrolling only happens after the first run of the program by counting the number of times the jobSearch function has been called. Also, ensures that the page auto scrolling works if the user is doing the first search using the app(otherwise the auto scrolling does not work if there is nothing inside the local storage and user is doing the very first search).
+        // Scroll page to results when user enters a search term
         if (jobSearchCalls > 1 || (jobSearchCalls === 1 && searchResults.length >= 1) || previousSearchButtonClickCount > 1) {
             document.getElementById("booksResult").scrollIntoView();
         }
