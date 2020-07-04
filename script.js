@@ -68,7 +68,7 @@ function jobSearch() {
         }
     })
 
-    renderBookResults();
+    renderBookResults(jobSearchKeyword);
     renderSearchButtons();
 }
 
@@ -112,7 +112,8 @@ function appStart() {
                 jobResultsDiv.append($('<p id=positionDesc style="text-align:justify;">' + response.results[i].description.replace(/<strong>/g, '') + '</p > '));
             }
         })
-        jobSearch();
+
+        renderBookResults(jobSearchKeyword);
         renderSearchButtons();
     }
 }
@@ -271,7 +272,7 @@ previousSearchesSection.on("click", function () {
         }
     })
 
-    renderBookResults();
+    renderBookResults(jobSearchKeyword);
 })
 
 appStart();
@@ -281,39 +282,36 @@ appStart();
 // =============================================================================================================
 
 
-function renderBookResults() {
-    searchResults = JSON.parse(localStorage.getItem("searchParameters"));
-    jobSearchKeyword = searchResults[searchResults.length - 1].keyword;
+function renderBookResults(jobSearchKeyword) {
     $(".slides").html('')
     $(".booksH3").removeClass("hidden");
     let searchTerm = jobSearchBox.val();
-    // Use keyword from local storage to search books when page is loaded
-    if (!searchTerm) {
+
+    if (jobSearchKeyword) {
         searchTerm = jobSearchKeyword
     }
 
     let queryURL = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm;
+
     $.ajax({
         url: queryURL,
         method: "GET"
     }).then(function (response) {
         let bookArray = response.items;
         const displayBookSlide = $(".slides");
-        // Append book results in carousel
+
         for (let i = 0; i < 5; i++) {
-            // Add carousel slide
             const newDiv = $("<div>").addClass(`slide-${i+1}`);
             const bookDiv = $("<div>").addClass("pure-g bookDetails");
-            // Book cover image div
             const imageDiv = $("<div>").addClass("pure-u-5-24 pure-u-sm-1");
             const bookThumbnail = $("<img>").attr({
                 src: bookArray[i].volumeInfo.imageLinks.thumbnail,
                 alt: "book cover"
             });
             imageDiv.append(bookThumbnail);
-            // Div containing book details
+
             const bookDescriptionDiv = $("<div>").addClass("pure-u-19-24 pure-u-sm-1");
-            // Book title with subtitle if available
+
             const bookTitleDisplay = $("<h3>").addClass("bookTitle");
             const booktitle = bookArray[i].volumeInfo.title;
             const subtitle = bookArray[i].volumeInfo.subtitle * 20;
@@ -322,36 +320,36 @@ function renderBookResults() {
             } else {
                 bookTitleDisplay.text(`${booktitle}`);
             }
-            // Rating div
+
             const ratingDisplay = $("<h4>").addClass("bookRating");
             const rating = bookArray[i].volumeInfo.averageRating;
-            // Display rating out of 5 into stars
             const ratingStar = (rating / 5) * 100;
             if (rating) {
-                ratingDisplay.html(`Rating:` + "&nbsp;" +  `<span class='stars-container stars-${ratingStar}'>★★★★★</span>`);
+                ratingDisplay.html(`Rating: <span class='stars-container stars-${ratingStar}'>★★★★★</span>`);
             } else {
                 ratingDisplay.text('');
             }
-            // Book description
+
             const bookDescription = $("<p>").addClass("bookDescription");
             const description = bookArray[i].volumeInfo.description;
             bookDescription.text(description);
-            // Book purchase/more info link
+
             const bookPurchase = $("<a>").addClass("bookBuy");
             bookPurchase.text("Click here for more information");
             bookPurchase.attr({
                 href: bookArray[i].volumeInfo.infoLink,
                 target: "_blank"
             })
-            // Append all book detatils to description div
+
             bookDescriptionDiv.append(bookTitleDisplay);
             bookDescriptionDiv.append(ratingDisplay);
             bookDescriptionDiv.append(bookDescription);
             bookDescriptionDiv.append(bookPurchase);
-            // Append image and descriiption to carousel slide
+
             bookDiv.append(imageDiv);
             bookDiv.append(bookDescriptionDiv);
             newDiv.append(bookDiv);
+
             displayBookSlide.append(newDiv);
         }
 
