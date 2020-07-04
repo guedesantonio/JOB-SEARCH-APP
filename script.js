@@ -68,7 +68,7 @@ function jobSearch() {
         }
     })
 
-    renderBookResults(jobSearchKeyword);
+    renderBookResults();
     renderSearchButtons();
 }
 
@@ -112,8 +112,7 @@ function appStart() {
                 jobResultsDiv.append($('<p id=positionDesc style="text-align:justify;">' + response.results[i].description.replace(/<strong>/g, '') + '</p > '));
             }
         })
-
-        renderBookResults(jobSearchKeyword);
+        jobSearch();
         renderSearchButtons();
     }
 }
@@ -272,7 +271,7 @@ previousSearchesSection.on("click", function () {
         }
     })
 
-    renderBookResults(jobSearchKeyword);
+    renderBookResults();
 })
 
 appStart();
@@ -282,17 +281,18 @@ appStart();
 // =============================================================================================================
 
 
-function renderBookResults(jobSearchKeyword) {
+function renderBookResults() {
+    searchResults = JSON.parse(localStorage.getItem("searchParameters"));
+    jobSearchKeyword = searchResults[searchResults.length - 1].keyword;
     $(".slides").html('')
     $(".booksH3").removeClass("hidden");
     let searchTerm = jobSearchBox.val();
-
-    if (jobSearchKeyword) {
+    
+    if (!searchTerm) {
         searchTerm = jobSearchKeyword
     }
 
     let queryURL = "https://www.googleapis.com/books/v1/volumes?q=" + searchTerm;
-
     $.ajax({
         url: queryURL,
         method: "GET"
