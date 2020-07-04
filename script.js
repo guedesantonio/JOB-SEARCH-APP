@@ -20,10 +20,13 @@ let sortBySalaryValue = "";
 let searchResults = [];
 let jobSearchCalls = 0;
 let previousSearchButtonClickCount = 0;
+let renderSearchButtonsCount = 0;
+let forLoopCount = 0;
 
 function jobSearch() {
 
     jobSearchCalls++;
+    console.log("jobsearch", jobSearchCalls);
 
     if (jobSearchBox.val() === "" && jobSearchKeyword === "") {
         return;
@@ -66,6 +69,7 @@ function jobSearch() {
     })
 
     renderBookResults(jobSearchKeyword);
+    renderSearchButtons();
 }
 
 function locationSearch() {
@@ -115,6 +119,10 @@ function appStart() {
 }
 
 function renderSearchButtons() {
+
+    //Ensuring that the previous rendering of the buttons will be deleted so it won't be appended to the new rendering. Without this line, all the previous renderes of the buttons will also be shown.
+    previousSearchesSection.html('')
+
     let buttondiv1 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv test1'>");
     let buttondiv2 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv test2'>");
     let buttondiv3 = $("<div class='pure-u-1 pure-u-md-1-3 buttonDiv test3'>");
@@ -124,6 +132,8 @@ function renderSearchButtons() {
     //If we have 4 results or less
     if (searchResults.length <= 4) {
         for (let i = 0; i < searchResults.length; i++) {
+            forLoopCount++;
+            console.log("forLoopCount", forLoopCount);
             let button = $("<button class='button-secondary pure-button' data-index=" + i + ">" + searchResults[i].keyword + "</button>");
             buttondiv1.prepend(button);
         }
