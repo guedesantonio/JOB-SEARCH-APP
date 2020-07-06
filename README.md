@@ -21,7 +21,7 @@ No instalation required
 Completed.
 
 ## Deployment
-You can find the live site at: https://guedesantonio.github.io/JOB-MEETUP-SEEKER-APP/
+You can find the live site at: https://guedesantonio.github.io/JOB-SEARCH-APP/
 
 ## References
 1. https://purecss.io/ - Purecss library
@@ -31,5 +31,3 @@ You can find the live site at: https://guedesantonio.github.io/JOB-MEETUP-SEEKER
 5. https://developers.google.com/books - Google Books API
 6. https://developer.mozilla.org/en-US/ - Various documentation
 7. https://stackoverflow.com/ - Questions & Answers
-
-TESTING
